@@ -23,6 +23,19 @@ const getAllUser = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+const getAllUserByRole = async (req, res) => {
+  const role = req.params.role;
+  console.log(role);
+  try {
+    const data = await User.find({ role: role });
+    res.json({
+      acknowledged: true,
+      userData: data,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 const addUser = async (req, res) => {
   const user = await User.find({ email: req.body.email });
   if (user.length == 0) {
@@ -88,6 +101,7 @@ const deleteUser = async (req, res) => {
 
 module.exports = {
   getAllUser,
+  getAllUserByRole,
   getUser,
   addUser,
   editUser,
