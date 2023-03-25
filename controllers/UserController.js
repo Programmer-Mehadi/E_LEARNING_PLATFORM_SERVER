@@ -41,11 +41,27 @@ const addUser = async (req, res) => {
 };
 const editUser = async (req, res) => {
   const id = req.params.id;
-  res.send({
-    status: true,
-    id: id,
-    data: "Edit user",
-  });
+  const updatedData = {
+    name: req.body.name,
+    email: req.body.email,
+    password: req.body.password,
+    role: req.body.role,
+  };
+  const options = { new: true };
+  const result = await User.findByIdAndUpdate(id, updatedData, options);
+  if (result) {
+    res.send({
+      status: true,
+      acknowledged: true,
+      userData: result,
+    });
+  } else {
+    res.send({
+      status: true,
+      acknowledged: false,
+      userData: {},
+    });
+  }
 };
 const deleteUser = async (req, res) => {
   const id = req.params.id;
