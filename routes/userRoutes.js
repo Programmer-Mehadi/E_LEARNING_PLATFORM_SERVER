@@ -9,4 +9,3 @@ router.patch("/edituser/:id", userController.editUser);
 router.delete("/deleteuser/:id", userController.deleteUser);
 
 module.exports = router;
-// router.get("/adduser", userController.addUser);
