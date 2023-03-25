@@ -1,6 +1,18 @@
 const User = require("../models/User");
 
 const getUser = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const data = await User.findById(id);
+    res.json({
+      acknowledged: true,
+      userData: data,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+const getAllUser = async (req, res) => {
   try {
     const data = await User.find();
     res.json({
@@ -65,14 +77,17 @@ const editUser = async (req, res) => {
 };
 const deleteUser = async (req, res) => {
   const id = req.params.id;
-  res.send({
-    status: true,
-    id: id,
-    data: "Delete user",
-  });
+  console.log(id);
+  const result = await User.findByIdAndDelete(id);
+  if (result) {
+    res.send({ status: true, acknowledged: true, userData: result });
+  } else {
+    res.send({ status: true, acknowledged: false, userData: {} });
+  }
 };
 
 module.exports = {
+  getAllUser,
   getUser,
   addUser,
   editUser,

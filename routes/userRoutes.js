@@ -1,7 +1,8 @@
 const router = require("express").Router();
 const userController = require("../controllers/UserController");
 
-router.get("/", userController.getUser);
+router.get("/getuser/:id", userController.getUser);
+router.get("/getalluser", userController.getAllUser);
 router.post("/adduser", userController.addUser);
 router.patch("/edituser/:id", userController.editUser);
 router.delete("/deleteuser/:id", userController.deleteUser);
